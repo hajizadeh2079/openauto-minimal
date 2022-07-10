@@ -235,7 +235,7 @@ int main(int argc, char* argv[])
                 }
 
             } else {
-                OPENAUTO_LOG(info) << "[Autoapp] TriggerAppStop: Manual stop wifi android auto.";
+                // OPENAUTO_LOG(info) << "[Autoapp] TriggerAppStop: Manual stop wifi android auto.";
                 try {
                     app->onAndroidAutoQuit();
                     //app->pause();

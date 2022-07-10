@@ -4,7 +4,7 @@
 #include <QFileInfo>
 #include <QTextStream>
 #include <fstream>
-#include <QNetworkInterface>
+// #include <QNetworkInterface>
 
 namespace f1x
 {
