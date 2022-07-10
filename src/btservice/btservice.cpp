@@ -18,8 +18,6 @@
 
 #include <QApplication>
 #include <f1x/openauto/Common/Log.hpp>
-// #include <f1x/openauto/btservice/AndroidBluetoothService.hpp>
-// #include <f1x/openauto/btservice/AndroidBluetoothServer.hpp>
 
 namespace btservice = f1x::openauto::btservice;
 
@@ -27,32 +25,7 @@ int main(int argc, char* argv[])
 {
     QApplication qApplication(argc, argv);
 
-    // const QBluetoothAddress address;
     const uint16_t portNumber = 5000;
-
-    // btservice::AndroidBluetoothServer androidBluetoothServer;
-    // if(!androidBluetoothServer.start(address, portNumber))
-    // {
-    //     OPENAUTO_LOG(error) << "[btservice] Server start failed.";
-    //     return 2;
-    // }
-
-    // OPENAUTO_LOG(info) << "[btservice] Listening for connections, address: " << address.toString().toStdString()
-    //                    << ", port: " << portNumber;
-
-    // btservice::AndroidBluetoothService androidBluetoothService(portNumber);
-    // if(!androidBluetoothService.registerService(address))
-    // {
-    //     OPENAUTO_LOG(error) << "[btservice] Service registration failed.";
-    //     return 1;
-    // }
-    // else
-    // {
-    //     OPENAUTO_LOG(info) << "[btservice] Service registered, port: " << portNumber;
-    // }
-
-    // qApplication.exec();
-    // androidBluetoothService.unregisterService();
 
     return 0;
 }
