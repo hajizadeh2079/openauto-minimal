@@ -76,17 +76,6 @@ signals:
     void toggleCursor();
     void TriggerScriptDay();
     void TriggerScriptNight();
-    void cameraShow();
-    void cameraHide();
-    void cameraStop();
-    void cameraSave();
-    void cameraRecord();
-    void cameraPosYUp();
-    void cameraPosYDown();
-    void cameraZoomPlus();
-    void cameraZoomMinus();
-    void cameraFlipX();
-    void cameraFlipY();
     void openConnectDialog();
     void openUpdateDialog();
     void showBrightnessSlider();
@@ -111,8 +100,6 @@ private slots:
     void switchGuiToDay();
     void switchGuiToNight();
     void showTime();
-    void cameraControlShow();
-    void cameraControlHide();
     void toggleExit();
     void createDebuglog();
     void setPairable();
@@ -178,7 +165,6 @@ private:
 
     char nightModeFile[32] = "/tmp/night_mode_enabled";
     char devModeFile[32] = "/tmp/dev_mode_enabled";
-    char cameraButtonFile[32] = "/etc/button_camera_visible";
     char brightnessButtonFile[32] = "/etc/button_brightness_visible";
     char debugModeFile[32] = "/tmp/usb_debug_mode";
     char lsFile[32] = "/etc/cs_lightsensor";
@@ -213,7 +199,6 @@ private:
 
     bool customBrightnessControl = false;
 
-    bool cameraButtonForce = false;
     bool brightnessButtonForce = false;
 
     bool nightModeEnabled = false;
@@ -260,9 +245,6 @@ private:
     bool udevupdate = false;
     bool openautoupdate = false;
     bool systemupdate = false;
-
-    int camera_ycorection;
-    int camera_zoom;
 
 
 protected:
