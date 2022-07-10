@@ -41,7 +41,6 @@ const std::string Configuration::cGeneralHideAlphaKey = "General.HideAlpha";
 const std::string Configuration::cGeneralShowLuxKey = "General.ShowLux";
 const std::string Configuration::cGeneralShowCursorKey = "General.ShowCursor";
 const std::string Configuration::cGeneralHideBrightnessControlKey = "General.HideBrightnessControl";
-// const std::string Configuration::cGeneralShowNetworkinfoKey = "General.ShowNetworkinfo";
 const std::string Configuration::cGeneralHideWarningKey = "General.HideWarning";
 
 const std::string Configuration::cGeneralHandednessOfTrafficTypeKey = "General.HandednessOfTrafficType";
@@ -109,7 +108,6 @@ void Configuration::load()
         showCursor_ = iniConfig.get<bool>(cGeneralShowCursorKey, false);
         hideBrightnessControl_ = iniConfig.get<bool>(cGeneralHideBrightnessControlKey, false);
         hideWarning_ = iniConfig.get<bool>(cGeneralHideWarningKey, false);
-        // showNetworkinfo_ = iniConfig.get<bool>(cGeneralShowNetworkinfoKey, false);
         mp3MasterPath_ = iniConfig.get<std::string>(cGeneralMp3MasterPathKey, "/media/MYMEDIA");
         mp3SubFolder_ = iniConfig.get<std::string>(cGeneralMp3SubFolderKey, "/");
         mp3Track_ = iniConfig.get<size_t>(cGeneralMp3TrackKey, 0);
@@ -158,7 +156,6 @@ void Configuration::reset()
     showCursor_ = false;
     hideBrightnessControl_ = false;
     hideWarning_ = false;
-    // showNetworkinfo_ = false;
     mp3MasterPath_ = "/media/MYMEDIA";
     mp3SubFolder_ = "/";
     mp3Track_ = 0;
@@ -193,7 +190,6 @@ void Configuration::save()
     iniConfig.put<bool>(cGeneralShowCursorKey, showCursor_);
     iniConfig.put<bool>(cGeneralHideBrightnessControlKey, hideBrightnessControl_);
     iniConfig.put<bool>(cGeneralHideWarningKey, hideWarning_);
-    // iniConfig.put<bool>(cGeneralShowNetworkinfoKey, showNetworkinfo_);
     iniConfig.put<std::string>(cGeneralMp3MasterPathKey, mp3MasterPath_);
     iniConfig.put<std::string>(cGeneralMp3SubFolderKey, mp3SubFolder_);
     iniConfig.put<int32_t>(cGeneralMp3TrackKey, mp3Track_);
@@ -346,16 +342,6 @@ bool Configuration::hideWarning() const
 {
     return hideWarning_;
 }
-
-// void Configuration::showNetworkinfo(bool value)
-// {
-//     showNetworkinfo_ = value;
-// }
-
-// bool Configuration::showNetworkinfo() const
-// {
-//     return showNetworkinfo_;
-// }
 
 std::string Configuration::getMp3MasterPath() const
 {

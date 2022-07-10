@@ -52,7 +52,6 @@ include_directories(${CMAKE_CURRENT_BINARY_DIR}
                     ${Qt5Multimedia_INCLUDE_DIRS}
                     ${Qt5MultimediaWidgets_INCLUDE_DIRS}
                     ${Qt5Widgets_INCLUDE_DIRS}
-                    # ${Qt5Network_INCLUDE_DIRS}
                     ${Boost_INCLUDE_DIRS}
                     ${PROTOBUF_INCLUDE_DIR}
                     ${OPENSSL_INCLUDE_DIR}
@@ -79,7 +78,6 @@ target_link_libraries(autoapp libusb
                         ${Boost_LIBRARIES}
                         ${Qt5Multimedia_LIBRARIES}
                         ${Qt5MultimediaWidgets_LIBRARIES}
-                        # ${Qt5Network_LIBRARIES}
                         ${PROTOBUF_LIBRARIES}
                         ${BCM_HOST_LIBRARIES}
                         ${ILCLIENT_LIBRARIES}

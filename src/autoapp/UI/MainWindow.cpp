@@ -30,7 +30,6 @@
 #include <QScreen>
 #include <QRect>
 #include <QVideoWidget>
-// #include <QNetworkInterface>
 #include <QStandardItemModel>
 #include <iostream>
 #include <fstream>
@@ -65,7 +64,6 @@ MainWindow::MainWindow(configuration::IConfiguration::Pointer configuration, QWi
     // trigger files
     this->nightModeEnabled = check_file_exist(this->nightModeFile);
     this->devModeEnabled = check_file_exist(this->devModeFile);
-    // this->wifiButtonForce = check_file_exist(this->wifiButtonFile);
     this->cameraButtonForce = check_file_exist(this->cameraButtonFile);
     this->brightnessButtonForce = check_file_exist(this->brightnessButtonFile);
     this->systemDebugmode = check_file_exist(this->debugModeFile);
@@ -116,8 +114,6 @@ MainWindow::MainWindow(configuration::IConfiguration::Pointer configuration, QWi
     connect(ui_->pushButtonUnMute, &QPushButton::clicked, this, &MainWindow::setUnMute);
     connect(ui_->pushButtonToggleGUI, &QPushButton::clicked, this, &MainWindow::toggleGUI);
     connect(ui_->pushButtonToggleGUI2, &QPushButton::clicked, this, &MainWindow::toggleGUI);
-    // connect(ui_->pushButtonWifi, &QPushButton::clicked, this, &MainWindow::openConnectDialog);
-    // connect(ui_->pushButtonWifi2, &QPushButton::clicked, this, &MainWindow::openConnectDialog);
     connect(ui_->pushButtonMusic, &QPushButton::clicked, this, &MainWindow::playerShow);
     connect(ui_->pushButtonMusic2, &QPushButton::clicked, this, &MainWindow::playerShow);
     connect(ui_->pushButtonBack, &QPushButton::clicked, this, &MainWindow::playerHide);
@@ -143,10 +139,6 @@ MainWindow::MainWindow(configuration::IConfiguration::Pointer configuration, QWi
     ui_->label_dummy_right->hide();
 
     ui_->dcRecording->hide();
-
-    // if (!configuration->showNetworkinfo()) {
-    //     ui_->networkInfo->hide();
-    // }
 
     if (!this->devModeEnabled) {
         ui_->labelLock->hide();
@@ -233,27 +225,6 @@ MainWindow::MainWindow(configuration::IConfiguration::Pointer configuration, QWi
 
     // as default hide muted button
     ui_->pushButtonUnMute->hide();
-
-    // hide wifi if not forced
-    // if (!this->wifiButtonForce && !std::ifstream("/tmp/mobile_hotspot_detected")) {
-    //     ui_->AAWIFIWidget->hide();
-    //     ui_->AAWIFIWidget2->hide();
-    // } else {
-    //     ui_->AAUSBWidget->hide();
-    //     ui_->AAUSBWidget2->hide();
-    // }
-
-    // if (std::ifstream("/tmp/temp_recent_list") || std::ifstream("/tmp/mobile_hotspot_detected")) {
-    //     ui_->pushButtonWifi->show();
-    //     ui_->pushButtonNoWiFiDevice->hide();
-    //     ui_->pushButtonWifi2->show();
-    //     ui_->pushButtonNoWiFiDevice2->hide();
-    // } else {
-    //     ui_->pushButtonWifi->hide();
-    //     ui_->pushButtonNoWiFiDevice->show();
-    //     ui_->pushButtonWifi2->hide();
-    //     ui_->pushButtonNoWiFiDevice2->show();
-    // }
 
     // set custom buttons if file enabled by trigger file
     if (!this->c1ButtonForce) {
@@ -550,7 +521,6 @@ MainWindow::MainWindow(configuration::IConfiguration::Pointer configuration, QWi
     connect(watcher_tmp, &QFileSystemWatcher::directoryChanged, this, &MainWindow::tmpChanged);
 
     // Experimental test code
-    // updateNetworkInfo();
 }
 
 MainWindow::~MainWindow()
@@ -563,32 +533,6 @@ MainWindow::~MainWindow()
 }
 }
 
-
-// void f1x::openauto::autoapp::ui::MainWindow::updateNetworkInfo()
-// {
-//     QNetworkInterface wlan0if = QNetworkInterface::interfaceFromName("wlan0");
-//     if (wlan0if.flags().testFlag(QNetworkInterface::IsUp)) {
-//         QList<QNetworkAddressEntry> entrieswlan0 = wlan0if.addressEntries();
-//         if (!entrieswlan0.isEmpty()) {
-//             QNetworkAddressEntry wlan0 = entrieswlan0.first();
-//             //qDebug() << "wlan0: " << wlan0.ip();
-//             ui_->value_ip->setText(wlan0.ip().toString().simplified());
-//             ui_->value_mask->setText(wlan0.netmask().toString().simplified());
-//             if (std::ifstream("/tmp/hotspot_active")) {
-//                 ui_->value_ssid->setText(configuration_->getParamFromFile("/etc/hostapd/hostapd.conf","ssid"));
-//             } else {
-//                 ui_->value_ssid->setText(configuration_->readFileContent("/tmp/wifi_ssid"));
-//             }
-//             ui_->value_gw->setText(configuration_->readFileContent("/tmp/gateway_wlan0"));
-//         }
-//     } else {
-//         //qDebug() << "wlan0: down";
-//         ui_->value_ip->setText("");
-//         ui_->value_mask->setText("");
-//         ui_->value_gw->setText("");
-//         ui_->value_ssid->setText("wlan0: down");
-//     }
-// }
 
 void f1x::openauto::autoapp::ui::MainWindow::customButtonPressed1()
 {
@@ -762,7 +706,6 @@ void f1x::openauto::autoapp::ui::MainWindow::updateAlpha()
         ui_->pushButtonDay->setStyleSheet( "background: rgba(252, 233, 79, " + alp + " ); border-radius: 4px; border: 2px solid rgba(255,255,255,0.5);");
         ui_->pushButtonNight->setStyleSheet( "background-color: rgba(114, 159, 207, " + alp + " ); border-radius: 4px; border: 2px solid rgba(255,255,255,0.5);");
         ui_->pushButtonCameraShow->setStyleSheet( "background-color: rgba(100, 62, 4, " + alp + " ); border-radius: 4px; border: 2px solid rgba(255,255,255,0.5);");
-        // ui_->pushButtonWifi->setStyleSheet( "background-color: rgba(252, 175, 62, " + alp + " ); border-radius: 4px; border: 2px solid rgba(255,255,255,0.5);");
         ui_->pushButtonToggleGUI->setStyleSheet( "background-color: rgba(237, 164, 255, " + alp + " ); border-radius: 4px; border: 2px solid rgba(255,255,255,0.5);");
         ui_->pushButton_c1->setStyleSheet( "background-color: rgba(" + this->custom_button_color_c1 + ", " + alp + " ); border-radius: 4px; border: 2px solid rgba(255,255,255,0.5); color: rgb(255,255,255);");
         ui_->pushButton_c2->setStyleSheet( "background-color: rgba(" + this->custom_button_color_c2 + ", " + alp + " ); border-radius: 4px; border: 2px solid rgba(255,255,255,0.5); color: rgb(255,255,255);");
@@ -779,7 +722,6 @@ void f1x::openauto::autoapp::ui::MainWindow::updateAlpha()
         ui_->labelAndroidAutoBottom->setStyleSheet( "background-color: rgba(48, 140, 198, " + alp + " ); border-bottom-left-radius: 4px; border-bottom-right-radius: 4px; border: 2px solid rgba(255,255,255,0.5); color: rgb(255,255,255); border-top: 0px;");
         ui_->labelAndroidAutoTop->setStyleSheet( "background-color: rgba(48, 140, 198, " + alp + " ); border-top-left-radius: 4px; border-top-right-radius: 4px; border: 2px solid rgba(255,255,255,0.5); color: rgb(255,255,255); border-bottom: 0px;");
         ui_->pushButtonNoDevice->setStyleSheet( "background-color: rgba(48, 140, 198, " + alp + " ); border-radius: 4px; border: 2px solid rgba(255,255,255,0.5); color: rgb(255,255,255);");
-        // ui_->pushButtonNoWiFiDevice->setStyleSheet( "background-color: rgba(252, 175, 62, " + alp + " ); border-radius: 4px; border: 2px solid rgba(255,255,255,0.5); color: rgb(255,255,255);");
         // old style
         ui_->pushButtonSettings2->setStyleSheet( "background-color: rgba(136, 138, 133, " + alp + " ); color: rgb(255, 255, 255); border-radius: 4px; border: 2px solid rgba(255,255,255,0.5); outline: none;");
         ui_->pushButtonLock2->setStyleSheet( "background-color: rgba(136, 138, 133, " + alp + " ); color: rgb(255, 255, 255); border-radius: 4px; border: 2px solid rgba(255,255,255,0.5); outline: none;");
@@ -792,8 +734,6 @@ void f1x::openauto::autoapp::ui::MainWindow::updateAlpha()
         ui_->pushButtonCancel2->setStyleSheet( "background-color: rgba(136, 138, 133, " + alp + " ); color: rgb(255, 255, 255); border-radius: 4px; border: 2px solid rgba(255,255,255,0.5); outline: none;");
         ui_->pushButtonAndroidAuto2->setStyleSheet( "background-color: rgba(136, 138, 133, " + alp + " ); color: rgb(255, 255, 255); border-radius: 4px; border: 2px solid rgba(255,255,255,0.5); outline: none;");
         ui_->pushButtonNoDevice2->setStyleSheet( "background-color: rgba(136, 138, 133, " + alp + " ); color: rgb(255, 255, 255); border-radius: 4px; border: 2px solid rgba(255,255,255,0.5); outline: none;");
-        // ui_->pushButtonWifi2->setStyleSheet( "background-color: rgba(136, 138, 133, " + alp + " ); color: rgb(255, 255, 255); border-radius: 4px; border: 2px solid rgba(255,255,255,0.5); outline: none;");
-        // ui_->pushButtonNoWiFiDevice2->setStyleSheet( "background-color: rgba(136, 138, 133, " + alp + " ); color: rgb(255, 255, 255); border-radius: 4px; border: 2px solid rgba(255,255,255,0.5); outline: none;");
         ui_->pushButtonDay2->setStyleSheet( "background-color: rgba(136, 138, 133, " + alp + " ); color: rgb(255, 255, 255); border-radius: 4px; border: 2px solid rgba(255,255,255,0.5); outline: none;");
         ui_->pushButtonNight2->setStyleSheet( "background-color: rgba(136, 138, 133, " + alp + " ); color: rgb(255, 255, 255); border-radius: 4px; border: 2px solid rgba(255,255,255,0.5); outline: none;");
         ui_->pushButtonCameraShow2->setStyleSheet( "background-color: rgba(136, 138, 133, " + alp + " ); color: rgb(255, 255, 255); border-radius: 4px; border: 2px solid rgba(255,255,255,0.5); outline: none;");
@@ -884,7 +824,6 @@ void f1x::openauto::autoapp::ui::MainWindow::playerShow()
     ui_->VolumeSliderControlPlayer->show();
     ui_->VolumeSliderControl->hide();
     ui_->BrightnessSliderControl->hide();
-    // ui_->networkInfo->hide();
     ui_->Info->hide();
     ui_->horizontalSliderProgressPlayer->hide();
     ui_->VolumeSliderControlPlayer->hide();
@@ -913,9 +852,6 @@ void f1x::openauto::autoapp::ui::MainWindow::playerHide()
     ui_->VolumeSliderControl->show();
     ui_->VolumeSliderControlPlayer->hide();
     ui_->BrightnessSliderControl->hide();
-    // if (configuration_->showNetworkinfo()) {
-    //     ui_->networkInfo->hide();
-    // }
     f1x::openauto::autoapp::ui::MainWindow::updateBG();
     f1x::openauto::autoapp::ui::MainWindow::tmpChanged();
 }
@@ -1866,59 +1802,11 @@ void f1x::openauto::autoapp::ui::MainWindow::tmpChanged()
 
     this->hotspotActive = check_file_exist("/tmp/hotspot_active");
 
-    // hide wifi if hotspot disabled and force wifi unselected
-    // if (!this->hotspotActive && !std::ifstream("/tmp/mobile_hotspot_detected")) {
-    //     if ((ui_->AAWIFIWidget->isVisible() == true) || (ui_->AAWIFIWidget2->isVisible() == true)){
-    //         ui_->AAWIFIWidget->hide();
-    //         ui_->AAWIFIWidget2->hide();
-    //         ui_->AAUSBWidget->show();
-    //         ui_->AAUSBWidget2->show();
-    //     }
-    // } else {
-    //     if ((ui_->AAWIFIWidget->isVisible() == false) || (ui_->AAWIFIWidget2->isVisible() == false)) {
-    //         ui_->AAWIFIWidget->show();
-    //         ui_->AAWIFIWidget2->show();
-    //         ui_->AAUSBWidget->hide();
-    //         ui_->AAUSBWidget2->hide();
-    //     }
-    // }
-
-    // if (std::ifstream("/tmp/temp_recent_list") || std::ifstream("/tmp/mobile_hotspot_detected")) {
-    //     if (ui_->pushButtonWifi->isVisible() == false) {
-    //         ui_->pushButtonWifi->show();
-    //     }
-    //     if (ui_->pushButtonNoWiFiDevice->isVisible() == true) {
-    //         ui_->pushButtonNoWiFiDevice->hide();
-    //     }
-    //     if (ui_->pushButtonWifi2->isVisible() == false) {
-    //         ui_->pushButtonWifi2->show();
-    //     }
-    //     if (ui_->pushButtonNoWiFiDevice2->isVisible() == true) {
-    //         ui_->pushButtonNoWiFiDevice2->hide();
-    //     }
-    // } else {
-    //     if (ui_->pushButtonWifi->isVisible() == true) {
-    //         ui_->pushButtonWifi->hide();
-    //     }
-    //     if (ui_->pushButtonNoWiFiDevice->isVisible() == false) {
-    //         ui_->pushButtonNoWiFiDevice->show();
-    //     }
-    //     if (ui_->pushButtonWifi2->isVisible() == true) {
-    //         ui_->pushButtonWifi2->hide();
-    //     }
-    //     if (ui_->pushButtonNoWiFiDevice2->isVisible() == false) {
-    //         ui_->pushButtonNoWiFiDevice2->show();
-    //     }
-    // }
-
     // handle dummys in classic menu
     int button_count = 0;
     if (ui_->pushButtonCameraShow2->isVisible() == true) {
         button_count = button_count + 1;
     }
-    // if (ui_->AAWIFIWidget2->isVisible() == true) {
-    //     button_count = button_count + 1;
-    // }
     if (ui_->pushButtonDebug2->isVisible() == true) {
         button_count = button_count + 1;
     }
@@ -1963,18 +1851,6 @@ void f1x::openauto::autoapp::ui::MainWindow::tmpChanged()
             ui_->bigClock->hide();
         }
     }
-
-    // if (!this->configuration_->showNetworkinfo()) {
-    //     if (ui_->networkInfo->isVisible() == true) {
-    //         ui_->networkInfo->hide();
-    //     }
-    // } else {
-    //     if (ui_->networkInfo->isVisible() == false) {
-    //         if (ui_->mediaWidget->isVisible() == false) {
-    //             ui_->networkInfo->show();
-    //         }
-    //     }
-    // }
 
     // hide gui toggle if enabled in settings
     if (this->configuration_->hideMenuToggle()) {
@@ -2068,6 +1944,5 @@ void f1x::openauto::autoapp::ui::MainWindow::tmpChanged()
             ui_->labelLockDummy->hide();
         }
     }
-    // updateNetworkInfo();
 }
 

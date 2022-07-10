@@ -25,7 +25,6 @@
 #include <string>
 #include <QTimer>
 #include <QDateTime>
-// #include <QNetworkInterface>
 #include <fstream>
 #include <QStorageInfo>
 #include <QProcess>
@@ -68,8 +67,6 @@ SettingsWindow::SettingsWindow(configuration::IConfiguration::Pointer configurat
     connect(ui_->pushButtonResetToDefaults, &QPushButton::clicked, this, &SettingsWindow::onResetToDefaults);
     connect(ui_->horizontalSliderSystemVolume, &QSlider::valueChanged, this, &SettingsWindow::onUpdateSystemVolume);
     connect(ui_->horizontalSliderSystemCapture, &QSlider::valueChanged, this, &SettingsWindow::onUpdateSystemCapture);
-    // connect(ui_->radioButtonHotspot, &QPushButton::clicked, this, &SettingsWindow::onStartHotspot);
-    // connect(ui_->radioButtonClient, &QPushButton::clicked, this, &SettingsWindow::onStopHotspot);
     connect(ui_->pushButtonSetTime, &QPushButton::clicked, this, &SettingsWindow::setTime);
     connect(ui_->pushButtonSetTime, &QPushButton::clicked, this, &SettingsWindow::close);
     connect(ui_->pushButtonNTP, &QPushButton::clicked, [&]() { system("/usr/local/bin/crankshaft rtc sync &"); });
@@ -77,9 +74,6 @@ SettingsWindow::SettingsWindow(configuration::IConfiguration::Pointer configurat
     connect(ui_->pushButtonCheckNow, &QPushButton::clicked, [&]() { system("/usr/local/bin/crankshaft update check &"); });
     connect(ui_->pushButtonDebuglog, &QPushButton::clicked, this, &SettingsWindow::close);
     connect(ui_->pushButtonDebuglog, &QPushButton::clicked, [&]() { system("/usr/local/bin/crankshaft debuglog &");});
-    // connect(ui_->pushButtonNetworkAuto, &QPushButton::clicked, [&]() { system("/usr/local/bin/crankshaft network auto &");});
-    // connect(ui_->pushButtonNetwork0, &QPushButton::clicked, this, &SettingsWindow::on_pushButtonNetwork0_clicked);
-    // connect(ui_->pushButtonNetwork1, &QPushButton::clicked, this, &SettingsWindow::on_pushButtonNetwork1_clicked);
     connect(ui_->pushButtonSambaStart, &QPushButton::clicked, [&]() { system("/usr/local/bin/crankshaft samba start &");});
     connect(ui_->pushButtonSambaStop, &QPushButton::clicked, [&]() { system("/usr/local/bin/crankshaft samba stop &");});
 
@@ -112,48 +106,15 @@ SettingsWindow::SettingsWindow(configuration::IConfiguration::Pointer configurat
     QString time_text_minute=time.toString("mm");
     ui_->spinBoxHour->setValue((time_text_hour).toInt());
     ui_->spinBoxMinute->setValue((time_text_minute).toInt());
-    // ui_->label_modeswitchprogress->setText("Ok");
-    // ui_->label_notavailable->hide();
-
-    // QString wifi_ssid = configuration_->getCSValue("WIFI_SSID");
-    // QString wifi2_ssid = configuration_->getCSValue("WIFI2_SSID");
-
-    // ui_->pushButtonNetwork0->setText(wifi_ssid);
-    // ui_->pushButtonNetwork1->setText(wifi2_ssid);
-
-    // if (!std::ifstream("/boot/crankshaft/network1.conf")) {
-    //     ui_->pushButtonNetwork1->hide();
-    //     ui_->pushButtonNetwork0->show();
-    // }
-    // if (!std::ifstream("/boot/crankshaft/network0.conf")) {
-    //     ui_->pushButtonNetwork1->hide();
-    //     ui_->pushButtonNetwork0->setText(configuration_->getCSValue("WIFI2_SSID"));
-    // }
-    // if (!std::ifstream("/boot/crankshaft/network0.conf") && !std::ifstream("/boot/crankshaft/network1.conf")) {
-    //     ui_->pushButtonNetwork0->hide();
-    //     ui_->pushButtonNetwork1->hide();
-    //     ui_->pushButtonNetworkAuto->hide();
-    //     ui_->label_notavailable->show();
-    // }
 
     if (std::ifstream("/tmp/hotspot_active")) {
-        // ui_->radioButtonClient->setChecked(0);
-        // ui_->radioButtonHotspot->setChecked(1);
-        // ui_->lineEditWifiSSID->setText(configuration_->getParamFromFile("/etc/hostapd/hostapd.conf","ssid"));
         ui_->lineEditPassword->show();
         ui_->label_password->show();
         ui_->lineEditPassword->setText("1234567890");
-        // ui_->clientNetworkSelect->hide();
-        // ui_->label_notavailable->show();
     } else {
-        // ui_->radioButtonClient->setChecked(1);
-        // ui_->radioButtonHotspot->setChecked(0);
-        // ui_->lineEditWifiSSID->setText(configuration_->readFileContent("/tmp/wifi_ssid"));
         ui_->lineEditPassword->hide();
         ui_->label_password->hide();
         ui_->lineEditPassword->setText("");
-        // ui_->clientNetworkSelect->hide();
-        // ui_->label_notavailable->show();
     }
 
     if (std::ifstream("/tmp/samba_running")) {
@@ -182,7 +143,6 @@ void SettingsWindow::updateInfo()
         updateSystemInfo();
     }
     if (ui_->tab5->isVisible() == true) {
-        // updateNetworkInfo();
     }
 }
 
@@ -198,7 +158,6 @@ void SettingsWindow::onSave()
     configuration_->showLux(ui_->checkBoxShowLux->isChecked());
     configuration_->showCursor(ui_->checkBoxShowCursor->isChecked());
     configuration_->hideBrightnessControl(ui_->checkBoxHideBrightnessControl->isChecked());
-    // configuration_->showNetworkinfo(ui_->checkBoxNetworkinfo->isChecked());
     configuration_->mp3AutoPlay(ui_->checkBoxAutoPlay->isChecked());
     configuration_->showAutoPlay(ui_->checkBoxShowPlayer->isChecked());
     configuration_->instantPlay(ui_->checkBoxInstantPlay->isChecked());
@@ -467,7 +426,6 @@ void SettingsWindow::load()
     ui_->checkBoxShowLux->setChecked(configuration_->showLux());
     ui_->checkBoxShowCursor->setChecked(configuration_->showCursor());
     ui_->checkBoxHideBrightnessControl->setChecked(configuration_->hideBrightnessControl());
-    // ui_->checkBoxNetworkinfo->setChecked(configuration_->showNetworkinfo());
     ui_->checkBoxAutoPlay->setChecked(configuration_->mp3AutoPlay());
     ui_->checkBoxShowPlayer->setChecked(configuration_->showAutoPlay());
     ui_->checkBoxInstantPlay->setChecked(configuration_->instantPlay());
@@ -931,13 +889,6 @@ void SettingsWindow::loadSystemValues()
         ui_->comboBoxGPIOShutdown->setCurrentText(configuration_->getCSValue("IGNITION_PIN"));
         ui_->spinBoxGPIOShutdownDelay->setValue(configuration_->getCSValue("IGNITION_DELAY").toInt());
 
-        // Wifi Hotspot
-        // if (configuration_->getCSValue("ENABLE_HOTSPOT") == "1") {
-        //     ui_->checkBoxHotspot->setChecked(true);
-        // } else {
-        //     ui_->checkBoxHotspot->setChecked(false);
-        // }
-
         // set cam
         if (configuration_->getParamFromFile("/boot/config.txt","start_x") == "1") {
             ui_->comboBoxCam->setCurrentText("enabled");
@@ -1016,8 +967,6 @@ void SettingsWindow::loadSystemValues()
         else if (theme == "custom") {
             ui_->radioButtonCustom->setChecked(true);
         }
-        // wifi country code
-        // ui_->comboBoxCountryCode->setCurrentIndex(ui_->comboBoxCountryCode->findText(configuration_->getCSValue("WIFI_COUNTRY"), Qt::MatchFlag::MatchStartsWith));
         // set screen blank instead off
         if (configuration_->getCSValue("SCREEN_POWEROFF_OVERRIDE") == "1") {
             ui_->checkBoxBlankOnly->setChecked(true);
@@ -1025,20 +974,11 @@ void SettingsWindow::loadSystemValues()
             ui_->checkBoxBlankOnly->setChecked(false);
         }
     }
-    // update network info
-    // updateNetworkInfo();
 }
 
 void SettingsWindow::onStartHotspot()
 {
-    // ui_->label_modeswitchprogress->setText("Wait ...");
-    // ui_->clientNetworkSelect->hide();
-    // ui_->label_notavailable->show();
-    // ui_->radioButtonClient->setEnabled(0);
-    // ui_->radioButtonHotspot->setEnabled(0);
     ui_->lineEdit_wlan0->setText("");
-    // ui_->lineEditWifiSSID->setText("");
-    // ui_->pushButtonNetworkAuto->hide();
     qApp->processEvents();
     std::remove("/tmp/manual_hotspot_control");
     std::ofstream("/tmp/manual_hotspot_control");
@@ -1047,15 +987,8 @@ void SettingsWindow::onStartHotspot()
 
 void SettingsWindow::onStopHotspot()
 {
-    // ui_->label_modeswitchprogress->setText("Wait ...");
-    // ui_->clientNetworkSelect->hide();
-    // ui_->label_notavailable->show();
-    // ui_->radioButtonClient->setEnabled(0);
-    // ui_->radioButtonHotspot->setEnabled(0);
     ui_->lineEdit_wlan0->setText("");
-    // ui_->lineEditWifiSSID->setText("");
     ui_->lineEditPassword->setText("");
-    // ui_->pushButtonNetworkAuto->hide();
     qApp->processEvents();
     system("/opt/crankshaft/service_hotspot.sh stop &");
 }
@@ -1239,110 +1172,3 @@ void f1x::openauto::autoapp::ui::SettingsWindow::on_pushButtonAudioTest_clicked(
     ui_->pushButtonAudioTest->show();
     ui_->labelTestInProgress->hide();
 }
-
-// void f1x::openauto::autoapp::ui::SettingsWindow::updateNetworkInfo()
-// {
-//     if (std::ifstream("/tmp/samba_running")) {
-//         ui_->labelSambaStatus->setText("running");
-//         if (ui_->pushButtonSambaStart->isVisible() == true) {
-//             ui_->pushButtonSambaStart->hide();
-//             ui_->pushButtonSambaStop->show();
-//         }
-//     } else {
-//         ui_->labelSambaStatus->setText("stopped");
-//         if (ui_->pushButtonSambaStop->isVisible() == true) {
-//             ui_->pushButtonSambaStop->hide();
-//             ui_->pushButtonSambaStart->show();
-//         }
-//     }
-
-//     if (!std::ifstream("/tmp/mode_change_progress")) {
-//         QNetworkInterface eth0if = QNetworkInterface::interfaceFromName("eth0");
-//         if (eth0if.flags().testFlag(QNetworkInterface::IsUp)) {
-//             QList<QNetworkAddressEntry> entrieseth0 = eth0if.addressEntries();
-//             if (!entrieseth0.isEmpty()) {
-//                 QNetworkAddressEntry eth0 = entrieseth0.first();
-//                 //qDebug() << "eth0: " << eth0.ip();
-//                 ui_->lineEdit_eth0->setText(eth0.ip().toString());
-//             }
-//         } else {
-//             //qDebug() << "eth0: down";
-//             ui_->lineEdit_eth0->setText("interface down");
-//         }
-
-//         QNetworkInterface wlan0if = QNetworkInterface::interfaceFromName("wlan0");
-//         if (wlan0if.flags().testFlag(QNetworkInterface::IsUp)) {
-//             QList<QNetworkAddressEntry> entrieswlan0 = wlan0if.addressEntries();
-//             if (!entrieswlan0.isEmpty()) {
-//                 QNetworkAddressEntry wlan0 = entrieswlan0.first();
-//                 //qDebug() << "wlan0: " << wlan0.ip();
-//                 ui_->lineEdit_wlan0->setText(wlan0.ip().toString());
-//             }
-//         } else {
-//             //qDebug() << "wlan0: down";
-//             ui_->lineEdit_wlan0->setText("interface down");
-//         }
-
-//         if (std::ifstream("/tmp/hotspot_active")) {
-//             ui_->radioButtonClient->setEnabled(1);
-//             ui_->radioButtonHotspot->setEnabled(1);
-//             ui_->radioButtonHotspot->setChecked(1);
-//             ui_->radioButtonClient->setChecked(0);
-//             ui_->label_modeswitchprogress->setText("Ok");
-//             ui_->lineEditWifiSSID->setText(configuration_->getParamFromFile("/etc/hostapd/hostapd.conf","ssid"));
-//             ui_->lineEditPassword->show();
-//             ui_->label_password->show();
-//             ui_->lineEditPassword->setText("1234567890");
-//             ui_->clientNetworkSelect->hide();
-//             ui_->pushButtonNetworkAuto->hide();
-//             ui_->label_notavailable->show();
-//         } else {
-//             ui_->radioButtonClient->setEnabled(1);
-//             ui_->radioButtonHotspot->setEnabled(1);
-//             ui_->radioButtonHotspot->setChecked(0);
-//             ui_->radioButtonClient->setChecked(1);
-//             ui_->label_modeswitchprogress->setText("Ok");
-//             ui_->lineEditWifiSSID->setText(configuration_->readFileContent("/tmp/wifi_ssid"));
-//             ui_->lineEditPassword->hide();
-//             ui_->label_password->hide();
-//             ui_->lineEditPassword->setText("");
-//             ui_->clientNetworkSelect->show();
-//             ui_->label_notavailable->hide();
-//             ui_->pushButtonNetworkAuto->show();
-
-//             if (!std::ifstream("/boot/crankshaft/network1.conf")) {
-//                 ui_->pushButtonNetwork1->hide();
-//                 ui_->pushButtonNetwork0->show();
-//             }
-//             if (!std::ifstream("/boot/crankshaft/network0.conf")) {
-//                 ui_->pushButtonNetwork1->hide();
-//                 ui_->pushButtonNetwork0->setText(configuration_->getCSValue("WIFI2_SSID"));
-//             }
-//             if (!std::ifstream("/boot/crankshaft/network0.conf") && !std::ifstream("/boot/crankshaft/network1.conf")) {
-//                 ui_->pushButtonNetwork0->hide();
-//                 ui_->pushButtonNetwork1->hide();
-//                 ui_->pushButtonNetworkAuto->hide();
-//                 ui_->label_notavailable->show();
-//             }
-//         }
-//     }
-// }
-
-// void f1x::openauto::autoapp::ui::SettingsWindow::on_pushButtonNetwork0_clicked()
-// {
-//     ui_->lineEdit_wlan0->setText("");
-//     ui_->lineEditWifiSSID->setText("");
-//     ui_->lineEditPassword->setText("");
-//     qApp->processEvents();
-//     system("/usr/local/bin/crankshaft network 0 >/dev/null 2>&1 &");
-
-// }
-
-// void f1x::openauto::autoapp::ui::SettingsWindow::on_pushButtonNetwork1_clicked()
-// {
-//     ui_->lineEdit_wlan0->setText("");
-//     ui_->lineEditWifiSSID->setText("");
-//     ui_->lineEditPassword->setText("");
-//     qApp->processEvents();
-//     system("/usr/local/bin/crankshaft network 1 >/dev/null 2>&1 &");
-// }
