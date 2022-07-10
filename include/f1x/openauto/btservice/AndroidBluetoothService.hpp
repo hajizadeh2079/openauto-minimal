@@ -16,7 +16,7 @@
 *  along with openauto. If not, see <http://www.gnu.org/licenses/>.
 */
 
-#pragma once
+/*#pragma once
 
 #include <QBluetoothServiceInfo>
 #include <f1x/openauto/btservice/IAndroidBluetoothService.hpp>
@@ -42,4 +42,4 @@ private:
 
 }
 }
-}
+}*/

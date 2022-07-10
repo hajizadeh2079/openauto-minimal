@@ -50,7 +50,7 @@ namespace ui
 MainWindow::MainWindow(configuration::IConfiguration::Pointer configuration, QWidget *parent)
     : QMainWindow(parent)
     , ui_(new Ui::MainWindow)
-    , localDevice(new QBluetoothLocalDevice)
+    // , localDevice(new QBluetoothLocalDevice)
 {
     // set default bg color to black
     this->setStyleSheet("QMainWindow {background-color: rgb(0,0,0);}");
@@ -111,7 +111,7 @@ MainWindow::MainWindow(configuration::IConfiguration::Pointer configuration, QWi
     connect(ui_->pushButtonVolume2, &QPushButton::clicked, this, &MainWindow::showVolumeSlider);
     connect(ui_->pushButtonDebug, &QPushButton::clicked, this, &MainWindow::createDebuglog);
     connect(ui_->pushButtonDebug2, &QPushButton::clicked, this, &MainWindow::createDebuglog);
-    connect(ui_->pushButtonBluetooth, &QPushButton::clicked, this, &MainWindow::setPairable);
+    // connect(ui_->pushButtonBluetooth, &QPushButton::clicked, this, &MainWindow::setPairable);
     connect(ui_->pushButtonMute, &QPushButton::clicked, this, &MainWindow::toggleMuteButton);
     connect(ui_->pushButtonMute, &QPushButton::clicked, this, &MainWindow::setMute);
     connect(ui_->pushButtonUnMute, &QPushButton::clicked, this, &MainWindow::toggleMuteButton);
@@ -131,8 +131,8 @@ MainWindow::MainWindow(configuration::IConfiguration::Pointer configuration, QWi
 
     ui_->clockOnlyWidget->hide();
 
-    ui_->pushButtonBluetooth->hide();
-    ui_->labelBluetoothPairable->hide();
+    // ui_->pushButtonBluetooth->hide();
+    // ui_->labelBluetoothPairable->hide();
 
     // by default hide media player
     ui_->mediaWidget->hide();
@@ -555,12 +555,12 @@ MainWindow::MainWindow(configuration::IConfiguration::Pointer configuration, QWi
     connect(watcher_tmp, &QFileSystemWatcher::directoryChanged, this, &MainWindow::tmpChanged);
 
     // Experimental test code
-    localDevice = new QBluetoothLocalDevice(this);
+    // localDevice = new QBluetoothLocalDevice(this);
 
-    connect(localDevice, SIGNAL(hostModeStateChanged(QBluetoothLocalDevice::HostMode)),
-            this, SLOT(hostModeStateChanged(QBluetoothLocalDevice::HostMode)));
+    // connect(localDevice, SIGNAL(hostModeStateChanged(QBluetoothLocalDevice::HostMode)),
+    //         this, SLOT(hostModeStateChanged(QBluetoothLocalDevice::HostMode)));
 
-    hostModeStateChanged(localDevice->hostMode());
+    // hostModeStateChanged(localDevice->hostMode());
     updateNetworkInfo();
 }
 
@@ -574,23 +574,23 @@ MainWindow::~MainWindow()
 }
 }
 
-void f1x::openauto::autoapp::ui::MainWindow::hostModeStateChanged(QBluetoothLocalDevice::HostMode mode)
-{
-    if (mode != QBluetoothLocalDevice::HostPoweredOff) {
-        this->bluetoothEnabled = true;
-        ui_->pushButtonBluetooth->show();
-        if (std::ifstream("/tmp/bluetooth_pairable")) {
-            ui_->labelBluetoothPairable->show();
-            ui_->pushButtonBluetooth->hide();
-        } else {
-            ui_->labelBluetoothPairable->hide();
-        }
-    } else {
-        this->bluetoothEnabled = false;
-        ui_->pushButtonBluetooth->hide();
-        ui_->labelBluetoothPairable->hide();
-    }
-}
+// void f1x::openauto::autoapp::ui::MainWindow::hostModeStateChanged(QBluetoothLocalDevice::HostMode mode)
+// {
+//     if (mode != QBluetoothLocalDevice::HostPoweredOff) {
+//         this->bluetoothEnabled = true;
+//         ui_->pushButtonBluetooth->show();
+//         if (std::ifstream("/tmp/bluetooth_pairable")) {
+//             ui_->labelBluetoothPairable->show();
+//             ui_->pushButtonBluetooth->hide();
+//         } else {
+//             ui_->labelBluetoothPairable->hide();
+//         }
+//     } else {
+//         this->bluetoothEnabled = false;
+//         ui_->pushButtonBluetooth->hide();
+//         ui_->labelBluetoothPairable->hide();
+//     }
+// }
 
 void f1x::openauto::autoapp::ui::MainWindow::updateNetworkInfo()
 {
@@ -1109,30 +1109,30 @@ void f1x::openauto::autoapp::ui::MainWindow::showTime()
     }
 
     // check connected devices
-    if (localDevice->isValid()) {
-        QString localDeviceName = localDevice->name();
-        QString localDeviceAddress = localDevice->address().toString();
-        QList<QBluetoothAddress> btdevices;
-        btdevices = localDevice->connectedDevices();
+    // if (localDevice->isValid()) {
+    //     QString localDeviceName = localDevice->name();
+    //     QString localDeviceAddress = localDevice->address().toString();
+    //     QList<QBluetoothAddress> btdevices;
+    //     btdevices = localDevice->connectedDevices();
 
-        int count = btdevices.count();
-        if (count > 0) {
-            //QBluetoothAddress btdevice = btdevices[0];
-            //QString btmac = btdevice.toString();
-            //ui_->btDeviceCount->setText(QString::number(count));
-            if (ui_->btDevice->isVisible() == false) {
-                ui_->btDevice->show();
-            }
-            if (std::ifstream("/tmp/btdevice")) {
-                ui_->btDevice->setText(configuration_->readFileContent("/tmp/btdevice"));
-            }
-        } else {
-            if (ui_->btDevice->isVisible() == true) {
-                ui_->btDevice->hide();
-                ui_->btDevice->setText("BT-Device");
-            }
-        }
-    }
+    //     int count = btdevices.count();
+    //     if (count > 0) {
+    //         //QBluetoothAddress btdevice = btdevices[0];
+    //         //QString btmac = btdevice.toString();
+    //         //ui_->btDeviceCount->setText(QString::number(count));
+    //         if (ui_->btDevice->isVisible() == false) {
+    //             ui_->btDevice->show();
+    //         }
+    //         if (std::ifstream("/tmp/btdevice")) {
+    //             ui_->btDevice->setText(configuration_->readFileContent("/tmp/btdevice"));
+    //         }
+    //     } else {
+    //         if (ui_->btDevice->isVisible() == true) {
+    //             ui_->btDevice->hide();
+    //             ui_->btDevice->setText("BT-Device");
+    //         }
+    //     }
+    // }
 }
 
 void f1x::openauto::autoapp::ui::MainWindow::on_horizontalSliderProgressPlayer_sliderMoved(int position)
@@ -1824,30 +1824,30 @@ void f1x::openauto::autoapp::ui::MainWindow::tmpChanged()
     }
 
     // check if bluetooth pairable
-    if (this->bluetoothEnabled) {
-        if (std::ifstream("/tmp/bluetooth_pairable")) {
-            if (ui_->labelBluetoothPairable->isVisible() == false) {
-                ui_->labelBluetoothPairable->show();
-            }
-            if (ui_->pushButtonBluetooth->isVisible() == true) {
-                ui_->pushButtonBluetooth->hide();
-            }
-        } else {
-            if (ui_->labelBluetoothPairable->isVisible() == true) {
-                ui_->labelBluetoothPairable->hide();
-            }
-            if (ui_->pushButtonBluetooth->isVisible() == false) {
-                ui_->pushButtonBluetooth->show();
-            }
-        }
-    } else {
-        if (ui_->labelBluetoothPairable->isVisible() == true) {
-            ui_->labelBluetoothPairable->hide();
-        }
-        if (ui_->pushButtonBluetooth->isVisible() == true) {
-            ui_->pushButtonBluetooth->hide();
-        }
-    }
+    // if (this->bluetoothEnabled) {
+    //     if (std::ifstream("/tmp/bluetooth_pairable")) {
+    //         if (ui_->labelBluetoothPairable->isVisible() == false) {
+    //             ui_->labelBluetoothPairable->show();
+    //         }
+    //         if (ui_->pushButtonBluetooth->isVisible() == true) {
+    //             ui_->pushButtonBluetooth->hide();
+    //         }
+    //     } else {
+    //         if (ui_->labelBluetoothPairable->isVisible() == true) {
+    //             ui_->labelBluetoothPairable->hide();
+    //         }
+    //         if (ui_->pushButtonBluetooth->isVisible() == false) {
+    //             ui_->pushButtonBluetooth->show();
+    //         }
+    //     }
+    // } else {
+    //     if (ui_->labelBluetoothPairable->isVisible() == true) {
+    //         ui_->labelBluetoothPairable->hide();
+    //     }
+    //     if (ui_->pushButtonBluetooth->isVisible() == true) {
+    //         ui_->pushButtonBluetooth->hide();
+    //     }
+    // }
 
     if (std::ifstream("/tmp/config_in_progress") || std::ifstream("/tmp/debug_in_progress") || std::ifstream("/tmp/enable_pairing")) {
         if (ui_->SysinfoTopLeft2->isVisible() == false) {

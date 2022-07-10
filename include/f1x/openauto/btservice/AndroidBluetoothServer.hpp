@@ -16,7 +16,7 @@
 *  along with openauto. If not, see <http://www.gnu.org/licenses/>.
 */
 
-#pragma once
+/*#pragma once
 
 #include <stdint.h>
 #include <memory>
@@ -48,4 +48,4 @@ private:
 
 }
 }
-}
+}*/

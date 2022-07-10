@@ -16,7 +16,7 @@
 *  along with openauto. If not, see <http://www.gnu.org/licenses/>.
 */
 
-#pragma once
+/*#pragma once
 
 namespace f1x
 {
@@ -37,4 +37,4 @@ enum class BluetoothAdapterType
 }
 }
 }
-}
+}*/

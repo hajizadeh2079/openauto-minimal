@@ -16,7 +16,7 @@
 *  along with openauto. If not, see <http://www.gnu.org/licenses/>.
 */
 
-#include <QApplication>
+/*#include <QApplication>
 #include <f1x/openauto/Common/Log.hpp>
 #include <f1x/openauto/autoapp/Projection/LocalBluetoothDevice.hpp>
 
@@ -181,4 +181,4 @@ void LocalBluetoothDevice::onHostModeStateChanged(QBluetoothLocalDevice::HostMod
 }
 }
 }
-}
+}*/

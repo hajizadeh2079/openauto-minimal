@@ -16,7 +16,7 @@
 *  along with openauto. If not, see <http://www.gnu.org/licenses/>.
 */
 
-#include <f1x/openauto/autoapp/Projection/RemoteBluetoothDevice.hpp>
+/*#include <f1x/openauto/autoapp/Projection/RemoteBluetoothDevice.hpp>
 
 namespace f1x
 {
@@ -61,4 +61,4 @@ bool RemoteBluetoothDevice::isAvailable() const
 }
 }
 }
-}
+}*/

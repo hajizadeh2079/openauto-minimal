@@ -16,7 +16,7 @@
 *  along with openauto. If not, see <http://www.gnu.org/licenses/>.
 */
 
-#include <f1x/openauto/Common/Log.hpp>
+/*#include <f1x/openauto/Common/Log.hpp>
 #include <f1x/openauto/btservice/AndroidBluetoothServer.hpp>
 
 namespace f1x
@@ -53,4 +53,4 @@ void AndroidBluetoothServer::onClientConnected()
 
 }
 }
-}
+}*/

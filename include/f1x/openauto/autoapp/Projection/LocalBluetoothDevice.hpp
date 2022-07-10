@@ -16,7 +16,7 @@
 *  along with openauto. If not, see <http://www.gnu.org/licenses/>.
 */
 
-#include <QBluetoothLocalDevice>
+/*#include <QBluetoothLocalDevice>
 #include <f1x/openauto/autoapp/Projection/IBluetoothDevice.hpp>
 
 #pragma once
@@ -65,4 +65,4 @@ private:
 }
 }
 }
-}
+}*/

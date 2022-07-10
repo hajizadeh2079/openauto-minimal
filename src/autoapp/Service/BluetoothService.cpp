@@ -16,7 +16,7 @@
 *  along with openauto. If not, see <http://www.gnu.org/licenses/>.
 */
 
-#include <f1x/openauto/Common/Log.hpp>
+/*#include <f1x/openauto/Common/Log.hpp>
 #include <f1x/openauto/autoapp/Service/BluetoothService.hpp>
 
 namespace f1x
@@ -122,4 +122,4 @@ void BluetoothService::onChannelError(const aasdk::error::Error& e)
 }
 }
 }
-}
+}*/

@@ -16,7 +16,7 @@
 *  along with openauto. If not, see <http://www.gnu.org/licenses/>.
 */
 
-#include <f1x/openauto/autoapp/Projection/DummyBluetoothDevice.hpp>
+/*#include <f1x/openauto/autoapp/Projection/DummyBluetoothDevice.hpp>
 
 namespace f1x
 {
@@ -55,4 +55,4 @@ bool DummyBluetoothDevice::isAvailable() const
 }
 }
 }
-}
+}*/
